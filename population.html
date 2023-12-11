@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Countries with Minimum Population</title>
+     <script>
+      function displayPopulation() {
+        //js logic
+        // used to make api calls
+
+        var http = new XMLHttpRequest(); //initializing XMLHttpRequest;
+
+        http.open("GET", "https://restcountries.com/v3.1/all"); // declaring the http method and url using open().
+
+        http.send(); //sending the http request;
+
+        http.onload = () => {
+          //Status Code
+          // 200, 201, 204 -> Success
+          // 400, 401, 404 -> Client Side
+          // 500, 502, 503 -> Server Side
+
+          if (http.status === 200) {
+            const response = http.response;
+
+            //converting string to object
+            const responseObj = JSON.parse(response); 
+            let display=responseObj.filter((key)=>{
+           
+               if(key.population<200000){
+                console.log("Country:",key.name.common," Population",key.population);
+               return key;
+               }
+            })
+            let str=JSON.stringify(display);
+          console.log("List of Asian Countries",str);
+        }
+              else {
+            console.log("Error");
+          }
+        };
+      }
+displayPopulation();
+      
+    </script> 
+  </head>
+  <body>
+    <h1>Countries with minimum Population</h1>
+    <div>List of Countries with minimum Population</div>
+    <!-- <button onclick="gettingUsers()">Get Users</button> -->
+  </body>
+</html>

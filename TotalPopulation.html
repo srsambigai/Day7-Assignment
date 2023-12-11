@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Total Population</title>
+     <script>
+      function displayTotalPopulation() {
+        //js logic
+        // used to make api calls
+
+        var http = new XMLHttpRequest(); //initializing XMLHttpRequest;
+
+        http.open("GET", "https://restcountries.com/v3.1/all"); // declaring the http method and url using open().
+
+        http.send(); //sending the http request;
+
+        http.onload = () => {
+          //Status Code
+          // 200, 201, 204 -> Success
+          // 400, 401, 404 -> Client Side
+          // 500, 502, 503 -> Server Side
+        let populationArr=[];
+          if (http.status === 200) {
+            const response = http.response;
+
+            //converting string to object
+            const responseObj = JSON.parse(response); 
+            for(let key in responseObj){
+                  populationArr.push(responseObj[key].population);
+                }
+                let totalpopulation = populationArr.reduce((sum,value) =>{ 
+                    return sum+value;
+                },0);
+                console.log("Total Population:",totalpopulation);
+          } else {
+            console.log("Error");
+          }
+        };
+      }
+      displayTotalPopulation();
+      
+    </script> 
+  </head>
+  <body>
+    <h1>Total Population</h1>
+    <div>This is to display Total Population of all the countries</div>
+    <!-- <button onclick="gettingUsers()">Get Users</button> -->
+  </body>
+</html>
